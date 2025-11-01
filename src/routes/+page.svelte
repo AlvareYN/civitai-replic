@@ -64,21 +64,48 @@
 									src={`https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${image.url}/anim=false,width=450,optimized=true/${image.id}.jpeg`}
 									alt={'image'}
 								/>
-								<div class="flex justify-between bg-gray-900 px-4 py-1">
+								<div
+									class="flex justify-between bg-[#25262b] px-4 py-1 text-sm"
+									style="color:#868e96;"
+								>
 									<div>
-										<span>asd</span>
+										<span>👍</span>
+										<span>{image.stats?.likeCountAllTime}</span>
 									</div>
 									<div>
-										<span>asd</span>
+										<span>❤️</span>
+										<span>{image.stats?.heartCountAllTime}</span>
 									</div>
 									<div>
-										<span>asd</span>
+										<span>😂</span>
+										<span>{image.stats?.laughCountAllTime}</span>
 									</div>
 									<div>
-										<span>asd</span>
+										<span>😢</span>
+										<span>{image.stats?.cryCountAllTime}</span>
 									</div>
 									<div>
-										<span>asd</span>
+										<span class="flex items-center gap-1">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="16"
+												height="16"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="yellow.7"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												class="tabler-icon tabler-icon-bolt"
+												style="fill: rgb(245, 159, 0);"
+												><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg
+											>
+											<p>
+												{new Intl.NumberFormat('en', { notation: 'compact' }).format(
+													image.stats?.tippedAmountCountAllTime || 0
+												)}
+											</p>
+										</span>
 									</div>
 								</div>
 							</div>
