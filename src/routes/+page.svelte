@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	let width: number = $state(0);
+
+	$inspect(width);
+
 	async function fetchFromApi() {
 		const response = await fetch('/api');
 		const data = await response.json();
@@ -8,21 +12,30 @@
 	}
 
 	function getChunksConsideringDeviceViewWidth() {
-		const width = window.innerWidth;
-
 		if (width >= 1280) {
 			return 5; // Desktop
+		} else if (width >= 1024) {
+			return 3; // Laptop
 		} else if (width >= 768) {
-			return 3; // Tablet
+			return 2; // Tablet
 		} else {
-			return 2; // Mobile
+			return 1; // Mobile
 		}
 	}
 
-	function divideDataIntoChunks(data: RequestData['data']['json']['items'], chunkSize: number) {
-		const chunks = [];
-		for (let i = 0; i < data.length; i += chunkSize) {
-			chunks.push(data.slice(i, i + chunkSize));
+	function divideDataIntoChunks(data: RequestData['data']['json']['items'], columns: number) {
+		const chunks = Array<Array<ImageItem>>();
+
+		for (let i = 0; i < columns; i++) {
+			chunks.push([]);
+		}
+		let counter = 0;
+		for (let i = 0; i < data.length; i++) {
+			chunks[counter].push(data[i]);
+			counter++;
+			if (counter === columns) {
+				counter = 0;
+			}
 		}
 
 		console.log(chunks);
@@ -31,19 +44,45 @@
 	}
 </script>
 
-<main class="wrap mx-auto flex h-full justify-center gap-4">
+<main class="wrap mx-auto flex h-full justify-center gap-4" bind:clientWidth={width}>
 	{#await fetchFromApi() then data}
 		{#each divideDataIntoChunks(data.json.items, getChunksConsideringDeviceViewWidth()) as chunk}
 			<div class="flex w-[320px] max-w-[450px] flex-col gap-4">
 				{#each chunk as image}
-					<div
-						class="border-gray-3 bg-gray-0 shadow-gray-4 dark:border-dark-4 dark:bg-dark-6 dark:shadow-dark-8 relative flex flex-col overflow-hidden rounded-md border"
-					>
-						<img
-							class="image"
-							src={`https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${image.url}/anim=false,width=450,optimized=true/${image.id}.jpeg`}
-							alt={'image'}
-						/>
+					<div class="relative">
+						<div
+							class="CosmeticWrapper_glow__KJ57U CosmeticWrapper_wrapper__kH8WX CosmeticWrapper_cssFrame__Lrn6N"
+							class:CosmeticWrapper_cssFrame__Lrn6N={!!image.cosmetic?.data?.glow}
+							style={`--comsmetic-border: ${image.cosmetic?.data?.cssFrame || 'none'}`}
+						>
+							<div
+								class=" border-gray-3 bg-gray-0 shadow-gray-4 dark:border-dark-4 dark:bg-dark-6 dark:shadow-dark-8 relative flex flex-col overflow-hidden rounded-md border"
+							>
+								<img
+									class="image"
+									style="max-width: 450px;"
+									src={`https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${image.url}/anim=false,width=450,optimized=true/${image.id}.jpeg`}
+									alt={'image'}
+								/>
+								<div class="flex justify-between bg-gray-900 px-4 py-1">
+									<div>
+										<span>asd</span>
+									</div>
+									<div>
+										<span>asd</span>
+									</div>
+									<div>
+										<span>asd</span>
+									</div>
+									<div>
+										<span>asd</span>
+									</div>
+									<div>
+										<span>asd</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -63,5 +102,33 @@
 		-o-object-position: top center;
 		object-position: top center;
 		transition: transform 0.4s ease;
+	}
+
+	.CosmeticWrapper_glow__KJ57U:before {
+		background-image: var(--comsmetic-border);
+		border-radius: 8px;
+		content: '';
+		filter: blur(5px);
+		inset: 0;
+		position: absolute;
+	}
+
+	.CosmeticWrapper_wrapper__kH8WX {
+		border-radius: 8px;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+	}
+
+	.CosmeticWrapper_cssFrame__Lrn6N {
+		background-image: var(--bgGradient);
+		box-shadow:
+			inset 0 0 1px 1px hsla(0, 0%, 100%, 0.3),
+			0 1px 2px rgba(0, 0, 0, 0.8);
+	}
+
+	.CosmeticWrapper_cssFrame__Lrn6N,
+	.CosmeticWrapper_texture__cRC58 {
+		padding: 6px;
 	}
 </style>
