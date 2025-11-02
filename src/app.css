@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+:root {
+	--badge-color: #fab005;
+	--badge-bd: calc(0.0625rem * 1) solid transparent;
+}
+
 body,
 html {
 	margin: 0;

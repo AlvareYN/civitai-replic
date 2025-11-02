@@ -56,7 +56,7 @@
 							style={`--comsmetic-border: ${image.cosmetic?.data?.cssFrame || 'none'}`}
 						>
 							<div
-								class=" border-gray-3 bg-gray-0 shadow-gray-4 dark:border-dark-4 dark:bg-dark-6 dark:shadow-dark-8 relative flex flex-col overflow-hidden rounded-md border"
+								class=" border-gray-3 bg-gray-0 shadow-gray-4 dark:border-dark-4 dark:bg-dark-6 dark:shadow-dark-8 relative flex flex-col overflow-hidden border"
 							>
 								<img
 									class="image"
@@ -84,7 +84,9 @@
 										<span>😢</span>
 										<span>{image.stats?.cryCountAllTime}</span>
 									</div>
-									<div>
+									<button
+										class="flex cursor-pointer gap-0.5 rounded-xs bg-[#F59F001A] px-0.5 pr-2 text-[#fab005]"
+									>
 										<span class="flex items-center gap-1">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +108,7 @@
 												)}
 											</p>
 										</span>
-									</div>
+									</button>
 								</div>
 							</div>
 						</div>
@@ -148,14 +150,10 @@
 	}
 
 	.CosmeticWrapper_cssFrame__Lrn6N {
-		background-image: var(--bgGradient);
+		background-image: var(--comsmetic-border);
 		box-shadow:
 			inset 0 0 1px 1px hsla(0, 0%, 100%, 0.3),
 			0 1px 2px rgba(0, 0, 0, 0.8);
-	}
-
-	.CosmeticWrapper_cssFrame__Lrn6N,
-	.CosmeticWrapper_texture__cRC58 {
 		padding: 6px;
 	}
 </style>
