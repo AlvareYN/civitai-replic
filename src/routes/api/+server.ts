@@ -1,7 +1,51 @@
-export const GET = async () => {
-	const response = await fetch(
-		'https://civitai.com/api/trpc/image.getInfinite?input=%7B%22json%22%3A%7B%22period%22%3A%22Week%22%2C%22periodMode%22%3A%22published%22%2C%22sort%22%3A%22Most%20Reactions%22%2C%22types%22%3A%5B%22image%22%5D%2C%22withMeta%22%3Afalse%2C%22useIndex%22%3Atrue%2C%22browsingLevel%22%3A1%2C%22include%22%3A%5B%22cosmetics%22%5D%2C%22excludedTagIds%22%3A%5B%5D%2C%22disablePoi%22%3Atrue%2C%22disableMinor%22%3Atrue%2C%22cursor%22%3Anull%7D%2C%22meta%22%3A%7B%22values%22%3A%7B%22cursor%22%3A%5B%22undefined%22%5D%7D%7D%7D'
-	);
+type CiviAIInput = {
+	json: {
+		period: string;
+		periodMode: string;
+		sort: string;
+		types: string[];
+		withMeta: boolean;
+		useIndex: boolean;
+		browsingLevel: number;
+		include: string[];
+		excludedTagIds: number[];
+		disablePoi: boolean;
+		disableMinor: boolean;
+		cursor: null | string;
+	};
+	meta?: { values: { cursor: Array<null | string> } };
+};
+
+export const GET = async ({ params, url }) => {
+	console.log('new request');
+	if (!params) {
+		return new Response('Bad Request', { status: 400 });
+	}
+	console.log(params);
+
+	const input: CiviAIInput = {
+		json: {
+			period: 'Week',
+			periodMode: 'published',
+			sort: 'Most Reactions',
+			types: ['image'],
+			withMeta: false,
+			useIndex: true,
+			browsingLevel: 1,
+			include: ['cosmetics'],
+			excludedTagIds: [],
+			disablePoi: true,
+			disableMinor: true,
+			cursor: url.searchParams.get('cursor') || 'undefined'
+		}
+	};
+
+	console.log(input);
+
+	const apiURL = new URL('https://civitai.com/api/trpc/image.getInfinite');
+	apiURL.searchParams.append('input', JSON.stringify(input));
+
+	const response = await fetch(apiURL.toString());
 
 	const data = await response.json();
 
