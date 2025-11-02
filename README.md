@@ -1,38 +1,45 @@
-# sv
+# Prueba Técnica
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This project is a replica created for a technical test. It's built with SvelteKit, TypeScript, and Tailwind CSS.
 
-## Creating a project
+## Getting Started
 
-If you're seeing this, you've probably already done this step. Congrats!
+### Prerequisites
+
+Make sure you have Node.js installed on your machine.
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install
 ```
 
-## Developing
+## Running Commands
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Development
+
+Start the development server:
 
 ```sh
 npm run dev
+```
 
-# or start the server and open the app in a new browser tab
+Or start the server and open the app in a new browser tab:
+
+```sh
 npm run dev -- --open
 ```
 
-## Building
+# Vercel Deployment
 
-To create a production version of your app:
+https://civitai-replic.vercel.app
 
-```sh
-npm run build
-```
+## Tech Stack
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- **SvelteKit** - Full-stack framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Vite** - Build tool
